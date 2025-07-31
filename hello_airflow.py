@@ -1,19 +1,13 @@
 from airflow import DAG
-from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 from datetime import datetime
 
-def say_hello():
-    print("🎉 Hello from Airflow!")
+default_args = {
+    'start_date': datetime(2025, 7, 30),
+}
 
-with DAG(
-    dag_id='hello_airflow',
-    start_date=datetime(2023, 1, 1),
-    schedule_interval='@daily',
-    catchup=False,
-    tags=["example"]
-) as dag:
-
-    task = PythonOperator(
-        task_id='say_hello_task',
-        python_callable=say_hello
+with DAG('hello_airflow', schedule='@daily', default_args=default_args, catchup=False) as dag:
+    task1 = BashOperator(
+        task_id='say_hello',
+        bash_command='echo "Hello from Airflow!"'
     )
