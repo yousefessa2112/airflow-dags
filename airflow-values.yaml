@@ -6,6 +6,8 @@ dags:
     subPath: dags
     wait: 5
     depth: 1
+    syncTimeout: 120
+    revision: HEAD
 
   persistence:
     enabled: false

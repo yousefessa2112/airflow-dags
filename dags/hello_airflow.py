@@ -11,4 +11,3 @@ with DAG('hello_airflow', schedule_interval='@daily', default_args=default_args,
         task_id='say_hello',
         bash_command='echo "Hello from Airflow!"'
     )
-
