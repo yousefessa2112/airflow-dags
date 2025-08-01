@@ -1,17 +1,13 @@
 from airflow import DAG
-from airflow.operators.python import PythonOperator
+from airflow.operators.empty import EmptyOperator
 from datetime import datetime
 
-def print_hello():
-    print("Hello from new_example_dag!")
-
 with DAG(
-    dag_id="new_example_dag",
-    start_date=datetime(2023, 1, 1),
-    schedule="@daily",
+    dag_id='example_dag',
+    start_date=datetime(2025, 8, 1),
+    schedule='@daily',
     catchup=False,
 ) as dag:
-    hello_task = PythonOperator(
-        task_id="print_hello_task",
-        python_callable=print_hello,
-    )
+    start = EmptyOperator(task_id="start")
+    end = EmptyOperator(task_id="end")
+    start >> end
