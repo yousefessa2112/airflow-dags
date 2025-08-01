@@ -1,14 +1,21 @@
 from airflow import DAG
-from airflow.operators.empty import EmptyOperator
+from airflow.operators.bash import BashOperator
 from datetime import datetime
 
-dag = DAG(
+with DAG(
     dag_id="example_dag",
     start_date=datetime(2023, 1, 1),
     schedule='@daily',
     catchup=False,
-)
+) as dag:
+    task1 = BashOperator(
+        task_id='start_task',
+        bash_command='echo "Start Task Running"'
+    )
 
-start = EmptyOperator(task_id="start", dag=dag)
-end = EmptyOperator(task_id="end", dag=dag)
-start >> end
+    task2 = BashOperator(
+        task_id='end_task',
+        bash_command='echo "End Task Running"'
+    )
+
+    task1 >> task2

@@ -12,7 +12,9 @@ dags:
     enabled: false
 
 webserver:
+  enabled: true
   defaultUser:
     enabled: true
     username: admin
     password: admin
+
